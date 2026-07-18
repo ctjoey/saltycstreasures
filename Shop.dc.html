@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<template id="__bundler_thumbnail" data-bg-color="#FAF6EC">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#FAF6EC"/>
+    <circle cx="600" cy="400" r="260" fill="none" stroke="#B98D4A" stroke-width="10"/>
+    <path d="M600 210 v340 M480 260 q120 60 240 0 M470 460 q130 90 260 0" fill="none" stroke="#1C3A56" stroke-width="16" stroke-linecap="round"/>
+    <circle cx="600" cy="210" r="26" fill="#1C3A56"/>
+  </svg>
+</template>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop — Salty C's Treasures</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #FAF6EC; }
+    a { color: #1C3A56; }
+    a:hover { color: #B98D4A; }
+  </style>
+  <script src="./image-slot.js"></script>
+</helmet>
+<div style="font-family:'Work Sans', sans-serif; color:#2A2A28; background:#FAF6EC;">
+  <dc-import name="SiteHeader" active="shop" cart-count="{{ cartCount }}" on-cart-click="{{ openCart }}" hint-size="100%,130px"></dc-import>
+  <dc-import name="CartDrawer" open="{{ cartOpen }}" items="{{ cartItemsForDrawer }}" on-remove="{{ removeItem }}" on-qty-change="{{ qtyChange }}" on-close="{{ closeCart }}" on-checkout="{{ checkout }}" hint-size="0,0"></dc-import>
+
+  <section style="max-width:1240px; margin:0 auto; padding:{{ headerPad }}; text-align:center;">
+    <div style="font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:#B98D4A; font-weight:600; margin-bottom:10px;">The Collection</div>
+    <h1 style="font-family:'Cormorant Garamond', serif; font-size:{{ titleSize }}; color:#1C3A56; margin:0 0 12px; font-weight:700;">Shop All</h1>
+    <p style="font-size:15px; color:#4A453D; max-width:520px; margin:0 auto;">Every piece is hand-painted and gilded to order — small variations are part of the charm.</p>
+  </section>
+
+  <section style="max-width:1240px; margin:0 auto; padding:0 32px 8px;">
+    <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-bottom:36px;">
+      <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
+        <button onClick="{{ f.select }}" style="{{ f.style }}">{{ f.label }}</button>
+      </sc-for>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:28px; padding-bottom:64px;">
+      <sc-for list="{{ filteredProducts }}" as="p" hint-placeholder-count="8">
+        <div>
+          <div style="width:100%; aspect-ratio:1/1; border-radius:12px; overflow:hidden; margin-bottom:14px;">
+            <image-slot id="{{ p.slotId }}" shape="rect" placeholder="{{ p.name }}"></image-slot>
+          </div>
+          <div style="font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#B98D4A; font-weight:600; margin-bottom:4px;">{{ p.category }}</div>
+          <div style="font-size:16px; font-weight:600; color:#1C3A56; margin-bottom:6px;">{{ p.name }}</div>
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-size:16px; color:#2A2A28;">${{ p.price }}</span>
+            <button onClick="{{ p.add }}" style="background:{{ p.btnBg }}; color:#FAF6EC; border:none; padding:8px 16px; border-radius:4px; font-size:13px; font-weight:600; cursor:pointer;">{{ p.btnLabel }}</button>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <footer style="background:#FAF6EC; border-top:1px solid #E4D9C2; padding:48px 32px 24px;">
+    <div style="max-width:1240px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:32px; margin-bottom:32px;">
+      <div>
+        <img src="assets/logo.png" alt="Salty C's Treasures" style="width:56px; height:56px; object-fit:contain; margin-bottom:12px;" />
+        <p style="font-size:13px; color:#7A7264; line-height:1.6; max-width:220px;">Handmade decoupage shells, crafted one at a time on the Treasure Coast.</p>
+      </div>
+      <div>
+        <div style="font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#1C3A56; margin-bottom:14px;">Shop</div>
+        <div style="display:flex; flex-direction:column; gap:8px; font-size:14px;">
+          <a href="Shop.dc.html?category=Magnets" style="text-decoration:none;">Magnets</a>
+          <a href="Shop.dc.html?category=Ornaments" style="text-decoration:none;">Ornaments</a>
+          <a href="Shop.dc.html?category=Trinket+Dishes" style="text-decoration:none;">Trinket Dishes</a>
+          <a href="Shop.dc.html?category=Wine+Stoppers" style="text-decoration:none;">Wine Stoppers</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#1C3A56; margin-bottom:14px;">Company</div>
+        <div style="display:flex; flex-direction:column; gap:8px; font-size:14px;">
+          <a href="About.dc.html" style="text-decoration:none;">About</a>
+          <a href="CustomOrder.dc.html" style="text-decoration:none;">Custom Orders</a>
+          <a href="Contact.dc.html" style="text-decoration:none;">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#1C3A56; margin-bottom:14px;">Follow Along</div>
+        <a href="https://www.tiktok.com/@saltycstreasures" target="_blank" rel="noopener" style="text-decoration:none; font-size:14px;">TikTok @saltycstreasures</a>
+      </div>
+    </div>
+    <div style="max-width:1240px; margin:0 auto; padding-top:20px; border-top:1px solid #E4D9C2; font-size:12px; color:#A69C87; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+      <span>© 2026 Salty C's Treasures. All rights reserved.</span>
+      <span>saltycstreasures.com</span>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { isMobile: false, cartOpen: false, cartItems: [], products: [], activeFilter: 'All', justAdded: null };
+
+  async componentDidMount() {
+    this.mq = window.matchMedia('(max-width: 860px)');
+    this.updateMq = () => this.setState({ isMobile: this.mq.matches });
+    this.updateMq();
+    this.mq.addEventListener('change', this.updateMq);
+
+    const cart = await import('./assets/cart.js');
+    this.cart = cart;
+    this.setState({ cartItems: cart.getCart() });
+    this.onCartChange = (e) => this.setState({ cartItems: e.detail });
+    window.addEventListener('sct-cart-change', this.onCartChange);
+
+    const products = await import('./assets/products.js');
+    const params = new URLSearchParams(window.location.search);
+    const cat = params.get('category');
+    this.setState({ products: products.PRODUCTS, activeFilter: cat || 'All' });
+  }
+
+  componentWillUnmount() {
+    if (this.mq) this.mq.removeEventListener('change', this.updateMq);
+    if (this.onCartChange) window.removeEventListener('sct-cart-change', this.onCartChange);
+  }
+
+  addToCart(p) {
+    if (!this.cart) return;
+    this.cart.addToCart({ id: p.id, name: p.name, price: p.price, hue: p.hue, category: p.category });
+    this.setState({ justAdded: p.id });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ justAdded: null }), 1200);
+  }
+
+  renderVals() {
+    const products = this.state.products ?? [];
+    const isMobile = this.state.isMobile;
+    const cartItems = this.state.cartItems ?? [];
+    const cartCount = cartItems.reduce((n, i) => n + i.qty, 0);
+    const active = this.state.activeFilter;
+
+    const filterNames = ['All', 'Magnets', 'Ornaments', 'Trinket Dishes', 'Wine Stoppers'];
+    const filters = filterNames.map(name => ({
+      label: name,
+      select: () => this.setState({ activeFilter: name }),
+      style: {
+        border: '1.5px solid ' + (active === name ? '#1C3A56' : '#D8CBAA'),
+        background: active === name ? '#1C3A56' : '#fff',
+        color: active === name ? '#FAF6EC' : '#1C3A56',
+        padding: '9px 18px',
+        borderRadius: '999px',
+        fontSize: '13px',
+        fontWeight: 600,
+        cursor: 'pointer',
+      },
+    }));
+
+    const filteredProducts = (active === 'All' ? products : products.filter(p => p.category === active)).map(p => ({
+      ...p,
+      slotId: 'shop-prod-' + p.id,
+      add: () => this.addToCart(p),
+      btnLabel: this.state.justAdded === p.id ? 'Added ✓' : 'Add to Cart',
+      btnBg: this.state.justAdded === p.id ? '#4C8C8A' : '#1C3A56',
+    }));
+
+    return {
+      cartCount,
+      cartOpen: this.state.cartOpen,
+      openCart: () => this.setState({ cartOpen: true }),
+      closeCart: () => this.setState({ cartOpen: false }),
+      cartItemsForDrawer: cartItems,
+      removeItem: (id) => this.cart && this.setState({ cartItems: this.cart.removeFromCart(id) }),
+      qtyChange: (id, qty) => this.cart && this.setState({ cartItems: this.cart.updateQty(id, qty) }),
+      checkout: () => alert('This is a demo checkout. Connect a Stripe account server-side to process real payments.'),
+      headerPad: isMobile ? '40px 24px 8px' : '56px 32px 8px',
+      titleSize: isMobile ? '34px' : '46px',
+      filters,
+      filteredProducts,
+    };
+  }
+}
+
+</script>
+</body>
+</html>

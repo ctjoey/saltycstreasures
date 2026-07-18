@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<template id="__bundler_thumbnail" data-bg-color="#FAF6EC">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#FAF6EC"/>
+    <circle cx="600" cy="400" r="260" fill="none" stroke="#B98D4A" stroke-width="10"/>
+    <path d="M600 210 v340 M480 260 q120 60 240 0 M470 460 q130 90 260 0" fill="none" stroke="#1C3A56" stroke-width="16" stroke-linecap="round"/>
+    <circle cx="600" cy="210" r="26" fill="#1C3A56"/>
+  </svg>
+</template>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salty C's Treasures — Handmade Decoupage Shells</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Yellowtail&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #FAF6EC; }
+    a { color: #1C3A56; }
+    a:hover { color: #B98D4A; }
+  </style>
+  <script src="./image-slot.js"></script>
+</helmet>
+<div style="font-family:'Work Sans', sans-serif; color:#2A2A28; background:#FAF6EC;">
+  <dc-import name="SiteHeader" active="home" cart-count="{{ cartCount }}" on-cart-click="{{ openCart }}" hint-size="100%,130px"></dc-import>
+  <dc-import name="CartDrawer" open="{{ cartOpen }}" items="{{ cartItemsForDrawer }}" on-remove="{{ removeItem }}" on-qty-change="{{ qtyChange }}" on-close="{{ closeCart }}" on-checkout="{{ checkout }}" hint-size="0,0"></dc-import>
+
+  <section style="display:grid; grid-template-columns:{{ heroCols }}; gap:48px; align-items:center; max-width:1240px; margin:0 auto; padding:{{ heroPad }};">
+    <div>
+      <div style="font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:#B98D4A; font-weight:600; margin-bottom:14px;">Handmade Decoupage Shells</div>
+      <h1 style="font-family:'Cormorant Garamond', serif; font-size:{{ heroTitleSize }}; line-height:1.05; color:#1C3A56; margin:0 0 20px; font-weight:700;">Treasures from the shoreline, made by hand.</h1>
+      <p style="font-size:17px; line-height:1.6; color:#4A453D; max-width:480px; margin:0 0 28px;">Each shell is cleaned, painted, and finished with gilded edges and hand-cut designs — one-of-a-kind keepsakes for your home.</p>
+      <div style="display:flex; gap:16px; flex-wrap:wrap;">
+        <a href="Shop.dc.html" style="background:#1C3A56; color:#FAF6EC; text-decoration:none; padding:14px 28px; border-radius:4px; font-size:15px; font-weight:600; letter-spacing:0.02em;">Shop the Collection</a>
+        <a href="CustomOrder.dc.html" style="background:transparent; color:#1C3A56; text-decoration:none; padding:14px 28px; border-radius:4px; font-size:15px; font-weight:600; border:1.5px solid #1C3A56;">Custom Orders</a>
+      </div>
+    </div>
+    <div style="width:100%; aspect-ratio:4/3; border-radius:16px; overflow:hidden;">
+      <image-slot id="hero-img" shape="rect" placeholder="Drop hero photo: decoupage shells styled on driftwood"></image-slot>
+    </div>
+  </section>
+
+  <section style="max-width:1240px; margin:0 auto; padding:48px 32px 8px;">
+    <h2 style="font-family:'Cormorant Garamond', serif; font-size:32px; color:#1C3A56; text-align:center; margin:0 0 32px; font-weight:700;">Shop by Category</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:20px;">
+      <sc-for list="{{ categories }}" as="cat" hint-placeholder-count="4">
+        <a href="{{ cat.href }}" style="text-decoration:none; color:inherit; display:block;">
+          <div style="width:100%; aspect-ratio:1/1; border-radius:12px; overflow:hidden; margin-bottom:12px;">
+            <image-slot id="{{ cat.slotId }}" shape="rect" placeholder="{{ cat.placeholder }}"></image-slot>
+          </div>
+          <div style="text-align:center; font-family:'Cormorant Garamond', serif; font-size:20px; font-weight:600; color:#1C3A56;">{{ cat.name }}</div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="max-width:1240px; margin:0 auto; padding:56px 32px;">
+    <h2 style="font-family:'Cormorant Garamond', serif; font-size:32px; color:#1C3A56; text-align:center; margin:0 0 32px; font-weight:700;">Best Sellers</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:28px;">
+      <sc-for list="{{ bestSellers }}" as="p" hint-placeholder-count="6">
+        <div>
+          <div style="width:100%; aspect-ratio:1/1; border-radius:12px; overflow:hidden; margin-bottom:14px;">
+            <image-slot id="{{ p.slotId }}" shape="rect" placeholder="{{ p.name }}"></image-slot>
+          </div>
+          <div style="font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#B98D4A; font-weight:600; margin-bottom:4px;">{{ p.category }}</div>
+          <div style="font-size:16px; font-weight:600; color:#1C3A56; margin-bottom:6px;">{{ p.name }}</div>
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-size:16px; color:#2A2A28;">${{ p.price }}</span>
+            <button onClick="{{ p.add }}" style="background:{{ p.btnBg }}; color:#FAF6EC; border:none; padding:8px 16px; border-radius:4px; font-size:13px; font-weight:600; cursor:pointer;">{{ p.btnLabel }}</button>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="background:#F3ECDC; padding:64px 32px;">
+    <div style="max-width:1240px; margin:0 auto; display:grid; grid-template-columns:{{ storyCols }}; gap:48px; align-items:center;">
+      <div style="width:100%; aspect-ratio:4/3; border-radius:16px; overflow:hidden;">
+        <image-slot id="story-img" shape="rect" placeholder="Drop photo: artist decoupaging a shell at her workbench"></image-slot>
+      </div>
+      <div>
+        <div style="font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:#B98D4A; font-weight:600; margin-bottom:14px;">Our Story</div>
+        <h2 style="font-family:'Cormorant Garamond', serif; font-size:30px; color:#1C3A56; margin:0 0 18px; font-weight:700;">Every shell has a story worth keeping.</h2>
+        <p style="font-size:16px; line-height:1.7; color:#4A453D; margin:0 0 24px;">Salty C's Treasures began with a single oyster shell, a paintbrush, and a love for coastal living. Today every piece is still cleaned, painted, and gilded by hand — no two are ever quite the same.</p>
+        <a href="About.dc.html" style="color:#1C3A56; font-weight:600; text-decoration:underline; font-size:15px;">Read our story →</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1240px; margin:0 auto; padding:64px 32px;">
+    <h2 style="font-family:'Cormorant Garamond', serif; font-size:32px; color:#1C3A56; text-align:center; margin:0 0 36px; font-weight:700;">What Customers Say</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:28px;">
+      <sc-for list="{{ testimonials }}" as="t" hint-placeholder-count="3">
+        <div style="background:#fff; border:1px solid #E4D9C2; border-radius:12px; padding:28px;">
+          <div style="color:#B98D4A; font-size:16px; margin-bottom:12px;">★★★★★</div>
+          <p style="font-size:15px; line-height:1.6; color:#3A362F; margin:0 0 16px; font-style:italic;">"{{ t.quote }}"</p>
+          <div style="font-size:14px; font-weight:600; color:#1C3A56;">{{ t.name }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="max-width:1240px; margin:0 auto; padding:16px 32px 64px;">
+    <div style="text-align:center; margin-bottom:28px;">
+      <h2 style="font-family:'Cormorant Garamond', serif; font-size:28px; color:#1C3A56; margin:0 0 6px; font-weight:700;">Follow the Craft</h2>
+      <a href="https://www.tiktok.com/@saltycstreasures" target="_blank" rel="noopener" style="color:#4C8C8A; font-size:15px; text-decoration:none; font-weight:600;">@saltycstreasures on TikTok</a>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:12px;">
+      <sc-for list="{{ socialSlots }}" as="s" hint-placeholder-count="6">
+        <div style="width:100%; aspect-ratio:1/1; border-radius:10px; overflow:hidden;">
+          <image-slot id="{{ s }}" shape="rect" placeholder="TikTok clip"></image-slot>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="background:#1C3A56; color:#FAF6EC; padding:56px 32px; text-align:center;">
+    <h2 style="font-family:'Yellowtail', cursive; font-size:40px; margin:0 0 10px; font-weight:400;">Stay Connected with Salty C's</h2>
+    <p style="font-size:15px; color:#CBD8DE; margin:0 0 24px;">Exclusive shell releases, restocks, custom order opportunities, and seasonal sales and discounts—delivered to your inbox.</p>
+    <form onSubmit="{{ onSubscribe }}" style="display:flex; gap:10px; justify-content:center; max-width:440px; margin:0 auto; flex-wrap:wrap;">
+      <input type="email" required placeholder="Your email" value="{{ email }}" onChange="{{ onEmailChange }}" style="flex:1; min-width:220px; padding:13px 16px; border-radius:4px; border:none; font-size:14px;" />
+      <button type="submit" style="background:#B98D4A; color:#1C3A56; border:none; padding:13px 24px; border-radius:4px; font-weight:700; font-size:14px; cursor:pointer;">{{ subscribeLabel }}</button>
+    </form>
+  </section>
+
+  <footer style="background:#FAF6EC; border-top:1px solid #E4D9C2; padding:48px 32px 24px;">
+    <div style="max-width:1240px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:32px; margin-bottom:32px;">
+      <div>
+        <img src="assets/logo.png" alt="Salty C's Treasures" style="width:56px; height:56px; object-fit:contain; margin-bottom:12px;" />
+        <p style="font-size:13px; color:#7A7264; line-height:1.6; max-width:220px;">Handmade decoupage shells, crafted one at a time on the Treasure Coast.</p>
+      </div>
+      <div>
+        <div style="font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#1C3A56; margin-bottom:14px;">Shop</div>
+        <div style="display:flex; flex-direction:column; gap:8px; font-size:14px;">
+          <a href="Shop.dc.html?category=Magnets" style="text-decoration:none;">Magnets</a>
+          <a href="Shop.dc.html?category=Ornaments" style="text-decoration:none;">Ornaments</a>
+          <a href="Shop.dc.html?category=Trinket+Dishes" style="text-decoration:none;">Trinket Dishes</a>
+          <a href="Shop.dc.html?category=Wine+Stoppers" style="text-decoration:none;">Wine Stoppers</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#1C3A56; margin-bottom:14px;">Company</div>
+        <div style="display:flex; flex-direction:column; gap:8px; font-size:14px;">
+          <a href="About.dc.html" style="text-decoration:none;">About</a>
+          <a href="CustomOrder.dc.html" style="text-decoration:none;">Custom Orders</a>
+          <a href="Contact.dc.html" style="text-decoration:none;">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#1C3A56; margin-bottom:14px;">Follow Along</div>
+        <a href="https://www.tiktok.com/@saltycstreasures" target="_blank" rel="noopener" style="text-decoration:none; font-size:14px;">TikTok @saltycstreasures</a>
+      </div>
+    </div>
+    <div style="max-width:1240px; margin:0 auto; padding-top:20px; border-top:1px solid #E4D9C2; font-size:12px; color:#A69C87; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+      <span>© 2026 Salty C's Treasures. All rights reserved.</span>
+      <span>saltycstreasures.com</span>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { isMobile: false, cartOpen: false, cartItems: [], email: '', subscribed: false, justAdded: null };
+
+  async componentDidMount() {
+    this.mq = window.matchMedia('(max-width: 860px)');
+    this.updateMq = () => this.setState({ isMobile: this.mq.matches });
+    this.updateMq();
+    this.mq.addEventListener('change', this.updateMq);
+
+    const cart = await import('./assets/cart.js');
+    this.cart = cart;
+    this.setState({ cartItems: cart.getCart() });
+    this.onCartChange = (e) => this.setState({ cartItems: e.detail });
+    window.addEventListener('sct-cart-change', this.onCartChange);
+
+    const products = await import('./assets/products.js');
+    this.setState({ products: products.PRODUCTS });
+  }
+
+  componentWillUnmount() {
+    if (this.mq) this.mq.removeEventListener('change', this.updateMq);
+    if (this.onCartChange) window.removeEventListener('sct-cart-change', this.onCartChange);
+  }
+
+  addToCart(p) {
+    if (!this.cart) return;
+    this.cart.addToCart({ id: p.id, name: p.name, price: p.price, hue: p.hue, category: p.category });
+    this.setState({ justAdded: p.id });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ justAdded: null }), 1200);
+  }
+
+  renderVals() {
+    const products = this.state.products ?? [];
+    const isMobile = this.state.isMobile;
+    const cartItems = this.state.cartItems ?? [];
+    const cartCount = cartItems.reduce((n, i) => n + i.qty, 0);
+
+    const categories = [
+      { name: 'Magnets', slotId: 'cat-magnets', href: 'Shop.dc.html?category=Magnets', placeholder: 'Magnet collection photo' },
+      { name: 'Ornaments', slotId: 'cat-ornaments', href: 'Shop.dc.html?category=Ornaments', placeholder: 'Ornament collection photo' },
+      { name: 'Trinket Dishes', slotId: 'cat-dishes', href: 'Shop.dc.html?category=Trinket+Dishes', placeholder: 'Trinket dish photo' },
+      { name: 'Wine Stoppers', slotId: 'cat-stoppers', href: 'Shop.dc.html?category=Wine+Stoppers', placeholder: 'Wine stopper photo' },
+      { name: 'Themes', slotId: 'cat-themes', href: 'Shop.dc.html?category=Themes', placeholder: 'Themed collection photo' },
+      { name: 'Closeouts', slotId: 'cat-closeouts', href: 'Shop.dc.html?category=Closeouts', placeholder: 'Closeout collection photo' },
+    ];
+
+    const bestSellers = products.slice(0, 6).map(p => ({
+      ...p,
+      slotId: 'prod-' + p.id,
+      add: () => this.addToCart(p),
+      btnLabel: this.state.justAdded === p.id ? 'Added ✓' : 'Add to Cart',
+      btnBg: this.state.justAdded === p.id ? '#4C8C8A' : '#1C3A56',
+    }));
+
+    const testimonials = [
+      { quote: "The lighthouse trinket dish is even more beautiful in person. You can tell every layer was placed by hand.", name: "Marianne T." },
+      { quote: "Ordered a custom set for my sister's wedding favors — they arrived perfectly packed and totally unique.", name: "Devon R." },
+      { quote: "My go-to gift for anyone who loves the coast. The gilded edges are gorgeous.", name: "Priya K." },
+    ];
+
+    return {
+      cartCount,
+      cartOpen: this.state.cartOpen,
+      openCart: () => this.setState({ cartOpen: true }),
+      closeCart: () => this.setState({ cartOpen: false }),
+      cartItemsForDrawer: cartItems,
+      removeItem: (id) => this.cart && this.setState({ cartItems: this.cart.removeFromCart(id) }),
+      qtyChange: (id, qty) => this.cart && this.setState({ cartItems: this.cart.updateQty(id, qty) }),
+      checkout: () => alert('This is a demo checkout. Connect a Stripe account server-side to process real payments.'),
+      heroCols: isMobile ? '1fr' : '1.1fr 1fr',
+      heroPad: isMobile ? '32px 24px' : '64px 32px',
+      heroTitleSize: isMobile ? '38px' : '54px',
+      categories,
+      bestSellers,
+      storyCols: isMobile ? '1fr' : '1fr 1fr',
+      testimonials,
+      socialSlots: ['social-1', 'social-2', 'social-3', 'social-4', 'social-5', 'social-6'],
+      email: this.state.email,
+      onEmailChange: (e) => this.setState({ email: e.target.value }),
+      onSubscribe: (e) => { e.preventDefault(); this.setState({ subscribed: true, email: '' }); },
+      subscribeLabel: this.state.subscribed ? 'Subscribed ✓' : 'Subscribe',
+    };
+  }
+}
+
+</script>
+</body>
+</html>

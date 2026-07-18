@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<template id="__bundler_thumbnail" data-bg-color="#FAF6EC">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#FAF6EC"/>
+    <circle cx="600" cy="400" r="260" fill="none" stroke="#B98D4A" stroke-width="10"/>
+    <path d="M600 210 v340 M480 260 q120 60 240 0 M470 460 q130 90 260 0" fill="none" stroke="#1C3A56" stroke-width="16" stroke-linecap="round"/>
+    <circle cx="600" cy="210" r="26" fill="#1C3A56"/>
+  </svg>
+</template>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Salty C's Treasures</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #FAF6EC; }
+    a { color: #1C3A56; }
+    a:hover { color: #B98D4A; }
+  </style>
+</helmet>
+<div style="font-family:'Work Sans', sans-serif; color:#2A2A28; background:#FAF6EC;">
+  <dc-import name="SiteHeader" active="contact" cart-count="{{ cartCount }}" on-cart-click="{{ openCart }}" hint-size="100%,130px"></dc-import>
+  <dc-import name="CartDrawer" open="{{ cartOpen }}" items="{{ cartItemsForDrawer }}" on-remove="{{ removeItem }}" on-qty-change="{{ qtyChange }}" on-close="{{ closeCart }}" on-checkout="{{ checkout }}" hint-size="0,0"></dc-import>
+
+  <section style="max-width:1240px; margin:0 auto; padding:{{ heroPad }}; text-align:center;">
+    <div style="font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:#B98D4A; font-weight:600; margin-bottom:10px;">Get in Touch</div>
+    <h1 style="font-family:'Cormorant Garamond', serif; font-size:{{ titleSize }}; color:#1C3A56; margin:0 0 12px; font-weight:700;">Contact Us</h1>
+    <p style="font-size:15px; color:#4A453D; max-width:480px; margin:0 auto;">Questions about an order, shipping, or a custom piece? We usually reply within 24 hours.</p>
+  </section>
+
+  <section style="max-width:1000px; margin:0 auto; padding:8px 32px 64px; display:grid; grid-template-columns:{{ formCols }}; gap:40px;">
+    <div style="background:#fff; border:1px solid #E4D9C2; border-radius:16px; padding:{{ formPad }};">
+      <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+        <div style="text-align:center; padding:32px 0;">
+          <div style="font-size:40px; margin-bottom:12px;">🐚</div>
+          <div style="font-size:16px; font-weight:700; color:#1C3A56; margin-bottom:8px;">Message sent!</div>
+          <div style="font-size:14px; color:#7A7264;">Thanks for reaching out — we'll be in touch soon.</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ onSubmit }}" style="display:flex; flex-direction:column; gap:16px;">
+          <input required placeholder="Name" style="{{ inputStyle }}" />
+          <input required type="email" placeholder="Email" style="{{ inputStyle }}" />
+          <input placeholder="Order number (optional)" style="{{ inputStyle }}" />
+          <textarea required placeholder="How can we help?" rows="5" style="{{ inputStyle }} resize:vertical;"></textarea>
+          <button type="submit" style="background:#1C3A56; color:#FAF6EC; border:none; padding:15px; border-radius:4px; font-size:15px; font-weight:700; cursor:pointer;">Send Message</button>
+        </form>
+      </sc-if>
+    </div>
+    <div>
+      <div style="margin-bottom:24px;">
+        <div style="font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#1C3A56; margin-bottom:10px;">Email</div>
+        <a href="mailto:tina@saltycstreasures.com" style="font-size:15px; text-decoration:none;">tina@saltycstreasures.com</a>
+      </div>
+      <div style="margin-bottom:24px;">
+        <div style="font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#1C3A56; margin-bottom:10px;">Follow</div>
+        <a href="https://www.tiktok.com/@saltycstreasures" target="_blank" rel="noopener" style="font-size:15px; text-decoration:none;">TikTok @saltycstreasures</a>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:#FAF6EC; border-top:1px solid #E4D9C2; padding:48px 32px 24px;">
+    <div style="max-width:1240px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:32px; margin-bottom:32px;">
+      <div>
+        <img src="assets/logo.png" alt="Salty C's Treasures" style="width:56px; height:56px; object-fit:contain; margin-bottom:12px;" />
+        <p style="font-size:13px; color:#7A7264; line-height:1.6; max-width:220px;">Handmade decoupage shells, crafted one at a time on the Treasure Coast.</p>
+      </div>
+      <div>
+        <div style="font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#1C3A56; margin-bottom:14px;">Shop</div>
+        <div style="display:flex; flex-direction:column; gap:8px; font-size:14px;">
+          <a href="Shop.dc.html?category=Magnets" style="text-decoration:none;">Magnets</a>
+          <a href="Shop.dc.html?category=Ornaments" style="text-decoration:none;">Ornaments</a>
+          <a href="Shop.dc.html?category=Trinket+Dishes" style="text-decoration:none;">Trinket Dishes</a>
+          <a href="Shop.dc.html?category=Wine+Stoppers" style="text-decoration:none;">Wine Stoppers</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#1C3A56; margin-bottom:14px;">Company</div>
+        <div style="display:flex; flex-direction:column; gap:8px; font-size:14px;">
+          <a href="About.dc.html" style="text-decoration:none;">About</a>
+          <a href="CustomOrder.dc.html" style="text-decoration:none;">Custom Orders</a>
+          <a href="Contact.dc.html" style="text-decoration:none;">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#1C3A56; margin-bottom:14px;">Follow Along</div>
+        <a href="https://www.tiktok.com/@saltycstreasures" target="_blank" rel="noopener" style="text-decoration:none; font-size:14px;">TikTok @saltycstreasures</a>
+      </div>
+    </div>
+    <div style="max-width:1240px; margin:0 auto; padding-top:20px; border-top:1px solid #E4D9C2; font-size:12px; color:#A69C87; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+      <span>© 2026 Salty C's Treasures. All rights reserved.</span>
+      <span>saltycstreasures.com</span>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { isMobile: false, cartOpen: false, cartItems: [], submitted: false };
+
+  async componentDidMount() {
+    this.mq = window.matchMedia('(max-width: 860px)');
+    this.updateMq = () => this.setState({ isMobile: this.mq.matches });
+    this.updateMq();
+    this.mq.addEventListener('change', this.updateMq);
+
+    const cart = await import('./assets/cart.js');
+    this.cart = cart;
+    this.setState({ cartItems: cart.getCart() });
+    this.onCartChange = (e) => this.setState({ cartItems: e.detail });
+    window.addEventListener('sct-cart-change', this.onCartChange);
+  }
+
+  componentWillUnmount() {
+    if (this.mq) this.mq.removeEventListener('change', this.updateMq);
+    if (this.onCartChange) window.removeEventListener('sct-cart-change', this.onCartChange);
+  }
+
+  renderVals() {
+    const isMobile = this.state.isMobile;
+    const cartItems = this.state.cartItems ?? [];
+    const cartCount = cartItems.reduce((n, i) => n + i.qty, 0);
+
+    const inputStyle = {
+      padding: '13px 14px',
+      borderRadius: '4px',
+      border: '1px solid #D8CBAA',
+      fontSize: '14px',
+      fontFamily: "'Work Sans', sans-serif",
+      width: '100%',
+      boxSizing: 'border-box',
+      background: '#fff',
+      color: '#2A2A28',
+    };
+
+    return {
+      cartCount,
+      cartOpen: this.state.cartOpen,
+      openCart: () => this.setState({ cartOpen: true }),
+      closeCart: () => this.setState({ cartOpen: false }),
+      cartItemsForDrawer: cartItems,
+      removeItem: (id) => this.cart && this.setState({ cartItems: this.cart.removeFromCart(id) }),
+      qtyChange: (id, qty) => this.cart && this.setState({ cartItems: this.cart.updateQty(id, qty) }),
+      checkout: () => alert('This is a demo checkout. Connect a Stripe account server-side to process real payments.'),
+      heroPad: isMobile ? '36px 24px 8px' : '56px 32px 8px',
+      titleSize: isMobile ? '32px' : '44px',
+      formCols: isMobile ? '1fr' : '1.3fr 1fr',
+      formPad: isMobile ? '28px 22px' : '36px',
+      inputStyle,
+      submitted: this.state.submitted,
+      notSubmitted: !this.state.submitted,
+      onSubmit: (e) => { e.preventDefault(); this.setState({ submitted: true }); },
+    };
+  }
+}
+
+</script>
+</body>
+</html>

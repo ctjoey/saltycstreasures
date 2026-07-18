@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <style>
+    @keyframes sct-backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</helmet>
+<sc-if value="{{ open }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed; inset:0; z-index:90; font-family:'Work Sans', sans-serif;">
+    <div onClick="{{ onClose }}" style="position:absolute; inset:0; background:rgba(28,58,86,0.35); animation:sct-backdrop-in 0.2s ease;"></div>
+    <div style="position:absolute; top:0; right:0; bottom:0; width:{{ drawerWidth }}; max-width:92vw; background:#FAF6EC; box-shadow:-8px 0 24px rgba(28,58,86,0.18); display:flex; flex-direction:column;">
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:20px 22px; border-bottom:1px solid #E4D9C2;">
+        <span style="font-family:'Cormorant Garamond', serif; font-size:24px; font-weight:600; color:#1C3A56;">Your Cart</span>
+        <button onClick="{{ onClose }}" style="background:none; border:none; cursor:pointer; font-size:22px; color:#1C3A56; line-height:1;">×</button>
+      </div>
+      <div style="flex:1; overflow-y:auto; padding:12px 22px;">
+        <sc-if value="{{ hasItems }}" hint-placeholder-val="{{ true }}">
+          <sc-for list="{{ items }}" as="item" hint-placeholder-count="2">
+            <div style="display:flex; gap:14px; padding:16px 0; border-bottom:1px solid #EFE7D6; align-items:center;">
+              <div style="width:56px; height:56px; border-radius:50%; flex-shrink:0; background:{{ item.hue }}; opacity:0.85; border:2px solid #C9A15C;"></div>
+              <div style="flex:1; min-width:0;">
+                <div style="font-size:14px; font-weight:600; color:#1C3A56;">{{ item.name }}</div>
+                <div style="font-size:12px; color:#7A7264; margin-top:2px;">${{ item.price }} each</div>
+                <div style="display:flex; align-items:center; gap:8px; margin-top:8px;">
+                  <button onClick="{{ item.decrement }}" style="width:24px; height:24px; border:1px solid #D8CBAA; background:#fff; border-radius:6px; cursor:pointer; color:#1C3A56;">−</button>
+                  <span style="font-size:13px; min-width:14px; text-align:center;">{{ item.qty }}</span>
+                  <button onClick="{{ item.increment }}" style="width:24px; height:24px; border:1px solid #D8CBAA; background:#fff; border-radius:6px; cursor:pointer; color:#1C3A56;">+</button>
+                  <button onClick="{{ item.remove }}" style="margin-left:auto; background:none; border:none; color:#B15C5C; font-size:12px; cursor:pointer; text-decoration:underline;">Remove</button>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </sc-if>
+        <sc-if value="{{ hasNoItems }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:48px 0; text-align:center; color:#7A7264; font-size:14px;">Your cart is empty.</div>
+        </sc-if>
+      </div>
+      <div style="padding:20px 22px; border-top:1px solid #E4D9C2;">
+        <div style="display:flex; justify-content:space-between; font-size:15px; color:#1C3A56; margin-bottom:14px;">
+          <span>Subtotal</span>
+          <span style="font-weight:700;">${{ subtotal }}</span>
+        </div>
+        <button onClick="{{ onCheckout }}" style="width:100%; background:#1C3A56; color:#FAF6EC; border:none; padding:14px; border-radius:4px; font-size:15px; font-weight:600; letter-spacing:0.02em; cursor:pointer;">Checkout with Stripe</button>
+        <div style="text-align:center; font-size:11px; color:#A69C87; margin-top:10px;">Secure checkout powered by Stripe</div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 420, &quot;height&quot;: 600}, &quot;open&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;}, &quot;items&quot;: {&quot;editor&quot;: null, &quot;tsType&quot;: &quot;Array&lt;{id:string,name:string,price:number,qty:number,hue:string}&gt;&quot;}, &quot;onRemove&quot;: {&quot;editor&quot;: null, &quot;tsType&quot;: &quot;(id:string)=&gt;void&quot;}, &quot;onQtyChange&quot;: {&quot;editor&quot;: null, &quot;tsType&quot;: &quot;(id:string,qty:number)=&gt;void&quot;}, &quot;onClose&quot;: {&quot;editor&quot;: null, &quot;tsType&quot;: &quot;()=&gt;void&quot;}, &quot;onCheckout&quot;: {&quot;editor&quot;: null, &quot;tsType&quot;: &quot;()=&gt;void&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const rawItems = this.props.items ?? [];
+    const onQtyChange = this.props.onQtyChange ?? (() => {});
+    const onRemove = this.props.onRemove ?? (() => {});
+    const items = rawItems.map(it => ({
+      ...it,
+      increment: () => onQtyChange(it.id, it.qty + 1),
+      decrement: () => onQtyChange(it.id, it.qty - 1),
+      remove: () => onRemove(it.id),
+    }));
+    const subtotal = rawItems.reduce((n, i) => n + i.qty * i.price, 0);
+    return {
+      open: this.props.open ?? false,
+      items,
+      hasItems: items.length > 0,
+      hasNoItems: items.length === 0,
+      subtotal: subtotal.toFixed(2),
+      drawerWidth: '400px',
+      onClose: this.props.onClose ?? (() => {}),
+      onCheckout: this.props.onCheckout ?? (() => {}),
+    };
+  }
+}
+
+</script>
+</body>
+</html>
